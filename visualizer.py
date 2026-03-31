@@ -7,7 +7,7 @@ from vispy.scene import visuals
 from pythonosc import dispatcher, osc_server
 
 OSC_IP   = "127.0.0.1"
-OSC_PORT = 9004
+VISUALIZER_PORT = 9004
 
 ACTOR_OSC_ADDR     = "/adm/obj/101/xyz"
 SPOTLIGHT_OSC_ADDR = "/adm/obj/1/xyz"
@@ -162,21 +162,21 @@ def build_scene():
         "Akteur",
         color=(0.2, 0.6, 1.0, 1.0),
         font_size=10,
-        pos=(10, 20),
+        pos=(30, 20),
         parent=canvas.scene,
     )
     visuals.Text(
         "Scheinwerfer",
         color=(1.0, 0.8, 0.1, 1.0),
         font_size=10,
-        pos=(10, 40),
+        pos=(60, 40),
         parent=canvas.scene,
     )
     visuals.Text(
         "Ausrichtung (XY-Ebene)",
         color=(1.0, 0.25, 0.25, 1.0),
         font_size=10,
-        pos=(10, 60),
+        pos=(100, 60),
         parent=canvas.scene,
     )
 
@@ -230,8 +230,8 @@ def run_visualizer():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="3D Visualizer für RL-ADM-OSC")
-    parser.add_argument("--port",  type=int,   default=OSC_PORT,
-                        help=f"OSC-Port (default: {OSC_PORT})")
+    parser.add_argument("--port",  type=int,   default=VISUALIZER_PORT,
+                        help=f"Visualizer-Port (default: {VISUALIZER_PORT})")
     parser.add_argument("--scale", type=float, default=SCALE,
                         help="Skalierungsfaktor für ADM-Koordinaten (default: 1.0)")
     args = parser.parse_args()

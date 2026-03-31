@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="243a9e58-19f8-4800-85d1-2fbe55c0a398" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/OSC-Hub.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/osc/hub.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/osc/input.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/osc/state_simulator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/visualizer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/OSC-Hub.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/OSC-Hub.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osc/hub.py" beforeDir="false" afterPath="$PROJECT_DIR$/osc/hub.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/visualizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/visualizer.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,15 +17,29 @@
   </component>
   <component name="CopilotPersistence">
     <persistenceIdMap>
+      <entry key="_/Users/darren/Documents/PycharmProjects/OSC-Hub" value="3BhkIia6D3eGGmqm3FJJV3qnwdz" />
+      <entry key="_/Users/darren/PycharmProjects/OSC-Hub" value="3BhiszXOwR4Qu54YeJOGUTCnjVB" />
       <entry key="_C:/Users/darre/Documents/Bachelorthesis/OSC-Hub" value="3BdHHtMHq3qPqdLK6BQcHVeaIHN" />
     </persistenceIdMap>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 2
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;darrenyeo245&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/darrenyeo245/OSC-Hub.git&quot;,
+    &quot;accountId&quot;: &quot;a3b488df-6e46-4fe3-930c-ef73dde864c0&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
   <component name="ProjectId" id="3BdHHtMHq3qPqdLK6BQcHVeaIHN" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -42,7 +54,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "ai.playground.ignore.import.keys.banner.in.settings": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "C:/Users/darre/Documents/Bachelorthesis/OSC-Hub",
+    "last_opened_file_path": "/Users/darren/Documents/PycharmProjects/OSC-Hub",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -69,6 +81,8 @@
       <option name="presentableId" value="Default" />
       <updated>1774811942915</updated>
       <workItem from="1774811943924" duration="349000" />
+      <workItem from="1774947915161" duration="309000" />
+      <workItem from="1774948612841" duration="141000" />
     </task>
     <servers />
   </component>

@@ -1,8 +1,14 @@
 from pythonosc.dispatcher import Dispatcher
 from pythonosc import osc_server, udp_client
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+RASPI_IP = os.getenv("RASPI_IP")
+RASPI_PORT = int(os.getenv("RASPI_PORT", 9001))
 
 clients = [
-    ("127.0.0.1", 9001), #RL-System
+    (RASPI_IP, RASPI_PORT), #RL-System
     ("127.0.0.1", 9002), #Media-Device
     ("127.0.0.1", 9003), #OSC-Listener
     ("127.0.0.1", 9004), #Visualizer
