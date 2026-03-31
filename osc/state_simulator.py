@@ -32,7 +32,7 @@ client = udp_client.SimpleUDPClient(HUB_IP, HUB_PORT)
 
 RNG = np.random.default_rng()
 
-STEP_SCALE = 0.5
+STEP_SCALE = 0.2
 DRIFT_SCALE = 0.1
 Z_BIAS = 0.01
 
