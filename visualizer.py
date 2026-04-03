@@ -16,7 +16,7 @@ SCALE = 1.0
 
 X_MIN, X_MAX = -1.0, 1.0
 Y_MIN, Y_MAX = -1.0, 1.0
-Z_MIN, Z_MAX = 0.0, 1.0
+Z_MIN, Z_MAX = -1.0, 1.0
 
 STATIC_SPOTLIGHT_POS = np.array([1.0, 1.0, 1.0], dtype=np.float32)
 GROUND_Z = 0.0

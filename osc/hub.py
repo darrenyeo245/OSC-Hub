@@ -8,12 +8,10 @@ RASPI_IP = os.getenv("RASPI_IP")
 RASPI_PORT = int(os.getenv("RASPI_PORT", 9001))
 
 clients = [
-    (RASPI_IP, RASPI_PORT), #RL-System
-    ("127.0.0.1", 9002), #Media-Device
-    ("127.0.0.1", 9003), #OSC-Listener
+    (RASPI_IP, RASPI_PORT), #RL-System/OSC-Interface
+    ("127.0.0.1", 9002), #State-Simulator
     ("127.0.0.1", 9004), #Visualizer
 ]
-
 
 def broadcast_handler(address, *args):
     for ip, port in clients:

@@ -22,7 +22,7 @@ def clamp_state(values):
     s = np.array(values[:3], dtype=np.float32)
     s[0] = np.clip(s[0], -1.0, 1.0)
     s[1] = np.clip(s[1], -1.0, 1.0)
-    s[2] = np.clip(s[2], 0.0, 0.0)  # Z niemals < 0
+    s[2] = np.clip(s[2], -1.0, 1.0)
     return s
 
 
