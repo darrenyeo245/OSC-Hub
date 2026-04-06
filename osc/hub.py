@@ -11,6 +11,7 @@ clients = [
     (RASPI_IP, RASPI_PORT), #RL-System/OSC-Interface
     ("127.0.0.1", 9002), #State-Simulator
     ("127.0.0.1", 9004), #Visualizer
+    ("127.0.0.1", 9005), #ADM-Tester
 ]
 
 def broadcast_handler(address, *args):
