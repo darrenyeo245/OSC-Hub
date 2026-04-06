@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="243a9e58-19f8-4800-85d1-2fbe55c0a398" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/OSC-Hub.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/OSC-Hub.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/osc/hub.py" beforeDir="false" afterPath="$PROJECT_DIR$/osc/hub.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/osc/input.py" beforeDir="false" afterPath="$PROJECT_DIR$/osc/input.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +29,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/darrenyeo245/OSC-Hub.git&quot;,
-    &quot;accountId&quot;: &quot;a3b488df-6e46-4fe3-930c-ef73dde864c0&quot;
+    &quot;accountId&quot;: &quot;a29b1330-1b86-4a7d-8e81-0dd21bcb06a5&quot;
   }
 }</component>
   <component name="ProjectColorInfo">{
@@ -42,25 +40,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_MARK_IGNORED_FILES_AS_EXCLUDED": "true",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Python.hub.executor": "Run",
-    "Python.input.executor": "Run",
-    "Python.state_simulator.executor": "Run",
-    "Python.visualizer.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "ai.playground.ignore.import.keys.banner.in.settings": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/darren/Documents/PycharmProjects/OSC-Hub",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.hub.executor&quot;: &quot;Run&quot;,
+    &quot;Python.input.executor&quot;: &quot;Run&quot;,
+    &quot;Python.state_simulator.executor&quot;: &quot;Run&quot;,
+    &quot;Python.visualizer.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;ai.playground.ignore.import.keys.banner.in.settings&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/darren/Documents/PycharmProjects/OSC-Hub&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\darre\Documents\Bachelorthesis\OSC-Hub" />
@@ -91,6 +89,8 @@
       <workItem from="1774958410713" duration="308000" />
       <workItem from="1775136999318" duration="4231000" />
       <workItem from="1775144179608" duration="2697000" />
+      <workItem from="1775486158957" duration="7000" />
+      <workItem from="1775486488353" duration="783000" />
     </task>
     <servers />
   </component>

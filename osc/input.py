@@ -21,6 +21,8 @@ while True:
     elif key.lower() == "q":
         client.send_message("/training/stop", 1)
         print("Sent event: training stop")
+    elif key.lower() == "qs":
+        client.send_message("/training/stop_save", 1)
         break
     elif key.startswith("a "):
         parts = key.split()
