@@ -7,7 +7,6 @@ print("Kommandos:")
 print("  -1.0...1.0 -> numerischer Reward")
 print("  r                   -> Episode manuell resetten")
 print("  e                   -> Episode manuell beenden")
-print("  a x y z             -> Actor-Position (/adm/obj/101/xyz) setzen")
 print("  q                   -> Ende")
 
 while True:
@@ -24,17 +23,6 @@ while True:
     elif key.lower() == "qs":
         client.send_message("/training/stop_save", 1)
         break
-    elif key.startswith("a "):
-        parts = key.split()
-        if len(parts) == 4:
-            try:
-                xyz = [float(parts[1]), float(parts[2]), float(parts[3])]
-                client.send_message("/adm/obj/101/xyz", xyz)
-                print(f"Sent actor position: {xyz}")
-            except ValueError:
-                print("Ungültige Koordinaten. Nutze: a <x> <y> <z>")
-        else:
-            print("Ungültiges Format. Nutze: a <x> <y> <z>")
     else:
         try:
             value = float(key.replace(",", "."))

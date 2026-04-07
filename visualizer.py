@@ -9,15 +9,17 @@ from pythonosc import dispatcher, osc_server
 OSC_IP   = "127.0.0.1"
 VISUALIZER_PORT = 9004
 
-ACTOR_OSC_ADDR     = "/adm/obj/101/xyz"
-SPOTLIGHT_OSC_ADDR = "/adm/obj/1/xyz"
+ACTOR_OSC_ADDR     = "/adm/obj/101/aed"
+SPOTLIGHT_OSC_ADDR = "/adm/obj/1/aed"
 
 SCALE = 1.0
 
-X_MIN, X_MAX = -1.0, 1.0
-Y_MIN, Y_MAX = -1.0, 1.0
-Z_MIN, Z_MAX = -1.0, 1.0
+AZIMUTH_MIN, AZIMUTH_MAX = -180, 180
+ELEVATION_MIN, ELEVATION_MAX = -90, 90
+DISTANCE_MIN, DISTANCE_MAX = 0.0, 1.0
 
+SPOTLIGHT_SOURCE_AED = np.array([0.0, 0.0, 0.0], dtype=np.float32)
+ACTOR_ORIGIN = np.array([0.0, 0.0, 0.0], dtype=np.float32)
 STATIC_SPOTLIGHT_POS = np.array([1.0, 1.0, 1.0], dtype=np.float32)
 GROUND_Z = 0.0
 
@@ -30,9 +32,9 @@ def extend_to_room_boundary(origin, target):
     direction = direction / norm
 
     bounds = [
-        (X_MIN, 0), (X_MAX, 0),
-        (Y_MIN, 1), (Y_MAX, 1),
-        (Z_MIN, 2), (Z_MAX, 2),
+        (AZIMUTH_MIN, 0), (AZIMUTH_MAX, 0),
+        (ELEVATION_MIN, 1), (ELEVATION_MAX, 1),
+        (DISTANCE_MIN, 2), (DISTANCE_MAX, 2),
     ]
 
     t_min = np.inf
@@ -47,15 +49,22 @@ def extend_to_room_boundary(origin, target):
 
     return (origin + direction * t_min).astype(np.float32)
 
-def clamp_xyz(values):
+def clamp_aed(values):
     return np.array(
         [
-            np.clip(values[0], X_MIN, X_MAX),
-            np.clip(values[1], Y_MIN, Y_MAX),
-            np.clip(values[2], Z_MIN, Z_MAX),
+            np.clip(values[0], AZIMUTH_MIN, AZIMUTH_MAX),
+            np.clip(values[1], ELEVATION_MIN, ELEVATION_MAX),
+            np.clip(values[2], DISTANCE_MIN, DISTANCE_MAX),
         ],
         dtype=np.float32,
     )
+
+
+def parse_aed(args):
+    azimuth_deg = float(args[0])
+    elevation_deg = float(args[1])
+    distance = float(args[2]) * SCALE
+    return clamp_aed(np.array([azimuth_deg, elevation_deg, distance], dtype=np.float32))
 
 class InitState:
     def __init__(self):
@@ -67,17 +76,28 @@ class InitState:
 state = InitState()
 
 def handle_actor(address, *args):
-    if len(args) >= 3:
-        with state.lock:
-            state.actor_pos = clamp_xyz(np.array(args[:3], dtype=np.float32) * SCALE)
-            state.updated = True
+    if len(args) != 3:
+        return
+    try:
+        actor_aed = parse_aed(args)
+    except (TypeError, ValueError):
+        return
+
+    with state.lock:
+        state.actor_pos = actor_aed
+        state.updated = True
 
 def handle_spotlight(address, *args):
-    if len(args) >= 3:
-        with state.lock:
-            aim = clamp_xyz(np.array(args[:3], dtype=np.float32) * SCALE)
-            state.aim_pos = aim
-            state.updated = True
+    if len(args) != 3:
+        return
+    try:
+        aim_aed = parse_aed(args)
+    except (TypeError, ValueError):
+        return
+
+    with state.lock:
+        state.aim_pos = aim_aed
+        state.updated = True
 
 def start_osc_server():
     disp = dispatcher.Dispatcher()
@@ -102,14 +122,21 @@ def build_scene():
         distance=3.0,
         fov=40,
     )
-    view.camera.set_range(x=(X_MIN, X_MAX), y=(Y_MIN, Y_MAX), z=(Z_MIN, Z_MAX))
-
-    visuals.XYZAxis(parent=view.scene)
+    view.camera.set_range(
+        x=(AZIMUTH_MIN, AZIMUTH_MAX),
+        y=(ELEVATION_MIN, ELEVATION_MAX),
+        z=(DISTANCE_MIN, DISTANCE_MAX),
+    )
 
     grid_pos = []
-    for i in np.linspace(-1, 1, 11):
-        grid_pos += [[i, -1, 0], [i,  1, 0]]
-        grid_pos += [[-1, i, 0], [ 1, i, 0]]
+    # AED plane at d=0
+    for az in np.linspace(AZIMUTH_MIN, AZIMUTH_MAX, 13):
+        grid_pos += [[az, ELEVATION_MIN, DISTANCE_MIN], [az, ELEVATION_MAX, DISTANCE_MIN]]
+    for el in np.linspace(ELEVATION_MIN, ELEVATION_MAX, 13):
+        grid_pos += [[AZIMUTH_MIN, el, DISTANCE_MIN], [AZIMUTH_MAX, el, DISTANCE_MIN]]
+    # Vertical guides over distance
+    for az in np.linspace(AZIMUTH_MIN, AZIMUTH_MAX, 7):
+        grid_pos += [[az, 0.0, DISTANCE_MIN], [az, 0.0, DISTANCE_MAX]]
     grid_pos = np.array(grid_pos, dtype=np.float32)
     visuals.Line(
         pos=grid_pos,
@@ -130,7 +157,7 @@ def build_scene():
 
     spot_marker = visuals.Markers(parent=view.scene)
     spot_marker.set_data(
-        pos=STATIC_SPOTLIGHT_POS.reshape(1, 3),
+        pos=SPOTLIGHT_SOURCE_AED.reshape(1, 3),
         face_color=(1.0, 0.8, 0.1, 1.0),
         edge_color=(1.0, 1.0, 1.0, 0.4),
         size=20,
@@ -149,31 +176,31 @@ def build_scene():
     )
 
     _initial_end = extend_to_room_boundary(
-        STATIC_SPOTLIGHT_POS, np.array([0.0, 0.0, 0.0], dtype=np.float32)
+        SPOTLIGHT_SOURCE_AED, np.array([0.0, 0.0, 0.0], dtype=np.float32)
     )
     beam_line = visuals.Line(
-        pos=np.array([STATIC_SPOTLIGHT_POS, _initial_end], dtype=np.float32),
+        pos=np.array([SPOTLIGHT_SOURCE_AED, _initial_end], dtype=np.float32),
         color=(0.6, 0.6, 0.6, 0.7),
         width=2.0,
         parent=view.scene,
     )
 
     visuals.Text(
-        "Akteur",
+        "Akteur (AED)",
         color=(0.2, 0.6, 1.0, 1.0),
         font_size=10,
         pos=(30, 20),
         parent=canvas.scene,
     )
     visuals.Text(
-        "Scheinwerfer",
+        "Scheinwerfer (AED)",
         color=(1.0, 0.8, 0.1, 1.0),
         font_size=10,
         pos=(60, 40),
         parent=canvas.scene,
     )
     visuals.Text(
-        "Ausrichtung (XY-Ebene)",
+        "Ausrichtung (AED)",
         color=(1.0, 0.25, 0.25, 1.0),
         font_size=10,
         pos=(100, 60),
@@ -202,7 +229,7 @@ def run_visualizer():
             symbol="disc",
         )
         spot_marker.set_data(
-            pos=STATIC_SPOTLIGHT_POS.reshape(1, 3),
+            pos=SPOTLIGHT_SOURCE_AED.reshape(1, 3),
             face_color=(1.0, 0.8, 0.1, 1.0),
             edge_color=(1.0, 1.0, 1.0, 0.4),
             size=20,
@@ -217,9 +244,9 @@ def run_visualizer():
             edge_width=1.2,
             symbol="disc",
         )
-        beam_end = extend_to_room_boundary(STATIC_SPOTLIGHT_POS, aim_pos)
+        beam_end = extend_to_room_boundary(SPOTLIGHT_SOURCE_AED, aim_pos)
         beam_line.set_data(
-            pos=np.array([STATIC_SPOTLIGHT_POS, beam_end], dtype=np.float32)
+            pos=np.array([SPOTLIGHT_SOURCE_AED, beam_end], dtype=np.float32)
         )
         canvas.update()
 
@@ -229,11 +256,11 @@ def run_visualizer():
     app.run()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="3D Visualizer für RL-ADM-OSC")
+    parser = argparse.ArgumentParser(description="3D Visualizer für RL-ADM-OSC (AED-only)")
     parser.add_argument("--port",  type=int,   default=VISUALIZER_PORT,
                         help=f"Visualizer-Port (default: {VISUALIZER_PORT})")
     parser.add_argument("--scale", type=float, default=SCALE,
-                        help="Skalierungsfaktor für ADM-Koordinaten (default: 1.0)")
+                        help="Skalierungsfaktor nur für AED-Distanz (default: 1.0)")
     args = parser.parse_args()
 
     OSC_PORT = args.port

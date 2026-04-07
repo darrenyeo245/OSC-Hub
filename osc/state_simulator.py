@@ -8,7 +8,7 @@ IN_PORT = 9002
 HUB_IP = "127.0.0.1"
 HUB_PORT = 8000
 
-STATE_OUT_ADDR = "/adm/obj/101/xyz"
+STATE_OUT_ADDR = "/adm/obj/101/aed"
 RESET_IN_ADDR = "/episode/reset"
 STEP_TRIGGER_ADDRS = [
     "/reward",
@@ -20,9 +20,9 @@ STEP_TRIGGER_ADDRS = [
 
 def clamp_state(values):
     s = np.array(values[:3], dtype=np.float32)
-    s[0] = np.clip(s[0], -1.0, 1.0)
-    s[1] = np.clip(s[1], -1.0, 1.0)
-    s[2] = np.clip(s[2], -1.0, 1.0)
+    s[0] = np.clip(s[0], -180.0, 180.0)  # azimuth (deg)
+    s[1] = np.clip(s[1], -90.0, 90.0)    # elevation (deg)
+    s[2] = np.clip(s[2], -1.0, 1.0)      # distance
     return s
 
 
@@ -34,7 +34,6 @@ RNG = np.random.default_rng()
 
 STEP_SCALE = 0.2
 DRIFT_SCALE = 0.1
-Z_BIAS = 0.01
 
 
 def publish_state():
@@ -55,10 +54,9 @@ def reset_handler(address, *args):
 def step_handler(address, *args):
     del address, args
     with lock:
-        # Random walk per Zeitschritt; leichte Drift Richtung Zentrum.
+        # Random walk per step with light drift toward center (0,0,0).
         noise = RNG.normal(0.0, STEP_SCALE, size=3)
         drift = -state * DRIFT_SCALE
-        drift[2] = abs(drift[2]) + Z_BIAS
         state[:] = clamp_state(state + noise + drift)
     publish_state()
 
