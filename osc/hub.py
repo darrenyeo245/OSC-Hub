@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import os
 load_dotenv()
 
-RASPI_IP = os.getenv("RASPI_IP")
+RASPI_IP = os.getenv("RASPI_IP", "127.0.0.1")
 RASPI_PORT = int(os.getenv("RASPI_PORT", 9001))
 
 clients = [
