@@ -32,8 +32,8 @@ client = udp_client.SimpleUDPClient(HUB_IP, HUB_PORT)
 
 RNG = np.random.default_rng()
 
-STEP_SCALE = 0.2
-DRIFT_SCALE = 0.1
+STEP_SCALE = 20
+DRIFT_SCALE = np.array([0.03,0.04,0.08], dtype=np.float32)
 
 
 def publish_state():
@@ -54,7 +54,6 @@ def reset_handler(address, *args):
 def step_handler(address, *args):
     del address, args
     with lock:
-        # Random walk per step with light drift toward center (0,0,0).
         noise = RNG.normal(0.0, STEP_SCALE, size=3)
         drift = -state * DRIFT_SCALE
         state[:] = clamp_state(state + noise + drift)
