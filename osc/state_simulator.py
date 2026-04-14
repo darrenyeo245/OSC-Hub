@@ -8,7 +8,7 @@ IN_PORT = 9002
 HUB_IP = "127.0.0.1"
 HUB_PORT = 8000
 
-STATE_OUT_ADDR = "/adm/obj/101/aed"
+STATE_OUT_ADDR = "/adm/obj/101/xyz"
 RESET_IN_ADDR = "/episode/reset"
 STEP_TRIGGER_ADDRS = [
     "/reward",
@@ -20,9 +20,9 @@ STEP_TRIGGER_ADDRS = [
 
 def clamp_state(values):
     s = np.array(values[:3], dtype=np.float32)
-    s[0] = np.clip(s[0], -180.0, 180.0)  # azimuth (deg)
-    s[1] = np.clip(s[1], -90.0, 90.0)    # elevation (deg)
-    s[2] = np.clip(s[2], -1.0, 1.0)      # distance
+    s[0] = np.clip(s[0], -1.0, 1.0)
+    s[1] = np.clip(s[1], -1.0, 1.0)
+    s[2] = np.clip(s[2], -1.0, 1.0)
     return s
 
 
