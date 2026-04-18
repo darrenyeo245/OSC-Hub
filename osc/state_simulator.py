@@ -3,10 +3,10 @@ import numpy as np
 from pythonosc import osc_server, udp_client
 from pythonosc.dispatcher import Dispatcher
 
-IN_IP = "127.0.0.1"
-IN_PORT = 9002
-HUB_IP = "127.0.0.1"
-HUB_PORT = 8000
+IN_IP = "0.0.0.0"
+IN_PORT = 9001
+BROADCAST_IP = "255.255.255.255"
+BROADCAST_PORT = 9001
 
 STATE_OUT_ADDR = "/adm/obj/101/xyz"
 RESET_IN_ADDR = "/episode/reset"
@@ -28,7 +28,7 @@ def clamp_state(values):
 
 state = clamp_state([0.0, 0.0, 0.0])
 lock = threading.Lock()
-client = udp_client.SimpleUDPClient(HUB_IP, HUB_PORT)
+client = udp_client.SimpleUDPClient(BROADCAST_IP, BROADCAST_PORT, allow_broadcast=True)
 
 RNG = np.random.default_rng()
 
@@ -55,7 +55,6 @@ def reset_handler(address, *args):
 def step_handler(address, *args):
     del address, args
     with lock:
-        # Random walk per Zeitschritt; leichte Drift Richtung Zentrum.
         noise = RNG.normal(0.0, STEP_SCALE, size=3)
         drift = -state * DRIFT_SCALE
         drift[2] = abs(drift[2]) + Z_BIAS
